@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/apps/tictactoe/$1"
+      }
+    ]
+  }
+  
