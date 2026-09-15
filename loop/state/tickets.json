@@ -1,0 +1,88 @@
+{
+  "issues": [
+    {
+      "id": "local-1",
+      "identifier": "LOC-1",
+      "title": "Two-player Tic Tac Toe rules: board, win, draw, illegal moves",
+      "description": "## Why\nNeed a tiny deterministic rules module so UI and tests share one source of truth.\n## Done when\n- 3x3 board\n- X and O alternate\n- Rows, columns, diagonals count as wins\n- Full board with no line is a draw\n- Occupied cells and moves after game-over are rejected",
+      "url": "file://loop/state/tickets.json#1",
+      "state": {
+        "name": "Done",
+        "type": "completed"
+      },
+      "source": "local",
+      "label": "core",
+      "comments": [
+        {
+          "at": "2026-09-15T14:00:00.000Z",
+          "body": "Shipped in the first Cursor agent pass (apps/tictactoe/src/game.js + tests)."
+        }
+      ]
+    },
+    {
+      "id": "local-2",
+      "identifier": "LOC-2",
+      "title": "Browser UI: click cells, show status, highlight winning line, reset",
+      "description": "Render a board in the browser. Clicks call the rules module. Show whose turn, who won, or draw.\nHighlight the winning three cells. New game clears the board.",
+      "url": "file://loop/state/tickets.json#2",
+      "state": {
+        "name": "Done",
+        "type": "completed"
+      },
+      "source": "local",
+      "label": "ui",
+      "comments": [
+        {
+          "at": "2026-09-15T14:00:00.000Z",
+          "body": "Shipped in the first Cursor agent pass (ui.js, index.html, styles.css)."
+        }
+      ]
+    },
+    {
+      "id": "local-3",
+      "identifier": "LOC-3",
+      "title": "Persist in-progress games in localStorage",
+      "description": "Store board + current player under a versioned key so a refresh restores the match. Reset must clear storage.",
+      "url": "file://loop/state/tickets.json#3",
+      "state": {
+        "name": "Done",
+        "type": "completed"
+      },
+      "source": "local",
+      "label": "persist",
+      "comments": [
+        {
+          "at": "2026-09-15T14:00:00.000Z",
+          "body": "Shipped in the first Cursor agent pass (src/store.js, localStorage key tictactoe.v1)."
+        }
+      ]
+    },
+    {
+      "id": "local-4",
+      "identifier": "LOC-4",
+      "title": "Add keyboard navigation for the board",
+      "description": "Arrow keys move focus between cells. This is intentionally left for the agent loop to implement.\nDo not require a mouse.",
+      "url": "file://loop/state/tickets.json#4",
+      "state": {
+        "name": "Done",
+        "type": "completed"
+      },
+      "source": "local",
+      "label": "a11y",
+      "comments": [
+        {
+          "at": "2026-09-15T14:31:12.626Z",
+          "body": "## Plan\n\nPlan for LOC-4: Add keyboard navigation for the board\n1. Keep rules in src/game.js; do not fork win logic into the UI.\n2. Change only files the ticket needs.\n3. Run node tests before opening a PR.\n4. Leave a Linear comment with the PR URL."
+        },
+        {
+          "at": "2026-09-15T14:31:14.135Z",
+          "body": "PR: (no GITHUB_TOKEN/GITHUB_REPO — skipped real PR)\nReview: APPROVE\nAdded arrow-key navigation on the board."
+        },
+        {
+          "at": "2026-09-15T14:31:14.137Z",
+          "body": "No GitHub PR (token missing). Local/Linear ticket marked Done after a clean review so the demo loop still closes."
+        }
+      ]
+    }
+  ]
+}

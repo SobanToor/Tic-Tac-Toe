@@ -1,0 +1,71 @@
+name: PR loop
+
+# CI, review, and merge live in one workflow on purpose.
+# A GITHUB_TOKEN review does not start other workflows, so a
+# separate auto-merge workflow would never fire for agent reviews.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm test
+      - run: node loop/src/discover.js
+
+  review:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      event: ${{ steps.review.outputs.event }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - id: review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set +e
+          node loop/src/review.js "$PR_NUMBER" | tee review.out
+          code=$?
+          if grep -q "Review event: REQUEST_CHANGES" review.out; then
+            echo "event=REQUEST_CHANGES" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          echo "event=APPROVE" >> "$GITHUB_OUTPUT"
+          exit $code
+
+  merge:
+    needs: [test, review]
+    if: >
+      success() &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !contains(github.event.pull_request.labels.*.name, 'hold-merge')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Squash merge
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              merge_method: 'squash',
+            });

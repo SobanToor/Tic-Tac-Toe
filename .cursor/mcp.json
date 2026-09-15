@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "tictactoe-app": {
+      "command": "node",
+      "args": ["mcp-server/src/index.js"]
+    }
+  }
+}

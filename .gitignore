@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+loop/state/pending-merge.json
+loop/state/last-run.json
+loop/state/discoveries.json
+*.log
+.DS_Store
+Thumbs.db
+coverage/

@@ -1,0 +1,21 @@
+{
+  "name": "agent-dev-loop",
+  "private": true,
+  "type": "module",
+  "description": "Agent-driven ticket-to-merge loop around a trivial Tic Tac Toe app",
+  "scripts": {
+    "test": "node --test apps/tictactoe/test/*.test.js",
+    "start": "node apps/tictactoe/server.js",
+    "mcp": "node mcp-server/src/index.js",
+    "loop:bootstrap": "node loop/src/bootstrap.js",
+    "loop:run": "node loop/src/run.js",
+    "loop:discover": "node loop/src/discover.js",
+    "loop:review": "node loop/src/review.js",
+    "loop:approve": "node loop/src/approve.js",
+    "loop:status": "node loop/src/status.js",
+    "mcp:probe": "node mcp-server/src/probe.js explain_win_check"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "decisions": [
+    {
+      "at": "2026-09-15T14:00:00.000Z",
+      "decision": "Vanilla HTML/CSS/JS Tic Tac Toe, no framework",
+      "why": "The app is only a substrate for the agent loop. Extra build tooling would hide CI failures behind Vite config."
+    },
+    {
+      "at": "2026-09-15T14:05:00.000Z",
+      "decision": "MCP server reads live source instead of hardcoded answers",
+      "why": "So 'what does the win check do?' stays correct after agents edit game.js."
+    },
+    {
+      "at": "2026-09-15T14:10:00.000Z",
+      "decision": "Linear is the ticket source of truth; local JSON is a fallback",
+      "why": "The evaluation wants real Linear movement, but this workspace had no LINEAR_API_KEY at authoring time."
+    },
+    {
+      "at": "2026-09-15T14:29:29.512Z",
+      "decision": "Bootstrap opened four Tic Tac Toe tickets (rules, UI, persist, keyboard).",
+      "why": "Keyboard is the leftover ticket so the loop has real work after the first agent pass."
+    },
+    {
+      "at": "2026-09-15T14:31:12.622Z",
+      "decision": "Picked up LOC-4",
+      "why": "Plan for LOC-4: Add keyboard navigation for the board\n1. Keep rules in src/game.js; do not fork win logic into the UI.\n2. Change only files the ticket needs.\n3. Run node tests before opening a PR.\n4. Leave a Linear comment with the PR URL."
+    }
+  ]
+}
